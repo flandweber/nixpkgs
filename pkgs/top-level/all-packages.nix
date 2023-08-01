@@ -20472,6 +20472,8 @@ with pkgs;
 
   adslib = callPackage ../development/libraries/adslib { };
 
+  aemu = callPackage ../development/libraries/aemu { };
+
   afflib = callPackage ../development/libraries/afflib { };
 
   aften = callPackage ../development/libraries/aften { };
