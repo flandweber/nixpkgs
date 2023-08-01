@@ -21439,6 +21439,8 @@ with pkgs;
 
   gf2x = callPackage ../development/libraries/gf2x { };
 
+  gfxstream = callPackage ../development/libraries/gfxstream { };
+
   gd = callPackage ../development/libraries/gd {
     automake = automake115x;
   };
