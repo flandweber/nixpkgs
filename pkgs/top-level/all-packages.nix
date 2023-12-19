@@ -10265,6 +10265,8 @@ with pkgs;
 
   ncrack = callPackage ../tools/security/ncrack { };
 
+  netexec = python3Packages.callPackage ../tools/security/netexec { };
+
   nerdctl = callPackage ../applications/networking/cluster/nerdctl { };
 
   netdata = callPackage ../tools/system/netdata {
