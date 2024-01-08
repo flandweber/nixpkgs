@@ -1,0 +1,8 @@
+{
+        "protectedPrefixes": [
+          "committers.json"
+        ],
+        "committers": {
+                "Finn Landweber": {"email": "finn@landweber.xyz", "publicKey": "AAAAC3NzaC1lZDI1NTE5AAAAIBiNDWMPZNRItkm1U1CQkJUUrrmM+l7CdE6wyUHzr4Nr"}
+        }
+}
