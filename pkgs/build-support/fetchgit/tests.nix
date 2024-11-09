@@ -101,7 +101,7 @@
     publicKeys = [{
         type="gpg";
         key= fetchurl {
-          url = "https://keys.openpgp.org/vks/v1/by-fingerprint/5EF3A41171BB77E6110ED2D01F3D03348DB1A3E2";
+          url = "https://web.archive.org/web/20241109193517/https://keys.openpgp.org/vks/v1/by-fingerprint/5EF3A41171BB77E6110ED2D01F3D03348DB1A3E2";
           sha256 = "sha256-xvBWfaS1py7vyDIIYGtATqBOnWafd3B6OB2Blhfm4MU=";
         };
       }];
@@ -116,7 +116,7 @@
     publicKeys = [{
         type="gpg";
         key= fetchurl {
-          url = "https://keys.openpgp.org/vks/v1/by-fingerprint/B74417EDDF22AC9F9E90F49142E86A2A11F48D36";
+          url = "https://web.archive.org/web/20241109193821/https://keys.openpgp.org/vks/v1/by-fingerprint/B74417EDDF22AC9F9E90F49142E86A2A11F48D36";
           sha256 = "sha256-M4mvelY1nLeGuhgZIpF4oAe80kbJl2+wcDI6zp9YwXo=";
         };
       }];
@@ -131,7 +131,7 @@
     publicKeys = [{
         type="gpg";
         key= fetchurl {
-          url = "https://keys.openpgp.org/vks/v1/by-fingerprint/B74417EDDF22AC9F9E90F49142E86A2A11F48D36";
+          url = "https://web.archive.org/web/20241109193821/https://keys.openpgp.org/vks/v1/by-fingerprint/B74417EDDF22AC9F9E90F49142E86A2A11F48D36";
           sha256 = "sha256-M4mvelY1nLeGuhgZIpF4oAe80kbJl2+wcDI6zp9YwXo=";
         };
       }];
