@@ -8,16 +8,28 @@
   , fetchresult
   }:
   let
+    # split gpg keys from ssh keys
     keysPartitioned = lib.partition (k: k.type == "gpg") publicKeys;
-    gpgKeyring = runCommand "gpgKeyring" { buildInputs = [ gnupg ]; } ("gpg --no-default-keyring --homedir /build --keyring $out --fingerprint\n" + (lib.concatMapStrings (k: "gpg --homedir /build --no-default-keyring --keyring $out --import ${k.key}\n") keysPartitioned.right));
+    gpgKeys = lib.catAttrs "key" keysPartitioned.right;
+    sshKeys = keysPartitioned.wrong;
+    # create a keyring containing gpgKeys
+    gpgKeyring = runCommand "gpgKeyring" { buildInputs = [ gnupg ]; } ''
+      gpg --homedir /build --no-default-keyring --keyring $out --fingerprint    # create empty keyring at $out
+      for KEY in ${lib.concatStringsSep " " gpgKeys}
+      do
+        gpg --homedir /build --no-default-keyring --keyring $out --import $KEY  # import $KEY
+      done
+    '';
+    # wrap gpg to use gpgKeyring
     gpgWithKeys = writeShellApplication {
       name = "gpgWithKeys";
       runtimeInputs = [ gnupg ];
       text = ''
-        gpg --always-trust --homedir /build --no-default-keyring --keyring ${gpgKeyring} "$@"
+        gpg --homedir /build --no-default-keyring --always-trust --keyring ${gpgKeyring} "$@"
       '';
     };
-    allowedSignersFile = writeText "allowed signers" (lib.concatMapStrings (k: "* ${k.type} ${k.key}\n") keysPartitioned.wrong);
+    # create "allowed signers" file for ssh key verification: https://man.openbsd.org/ssh-keygen.1#ALLOWED_SIGNERS
+    allowedSignersFile = writeText "allowed signers" (lib.concatMapStrings (k: "* ${k.type} ${k.key}\n") sshKeys);
   in
   runCommand name
   {
@@ -32,6 +44,7 @@
           -C "${fetchresult}" \
           verify-commit ${rev}
     fi
+
     if test "$verifyTag" == 1; then
         git \
           -c gpg.ssh.allowedSignersFile="${allowedSignersFile}" \
@@ -40,6 +53,7 @@
           -C "${fetchresult}" \
           verify-tag ${rev}
     fi
+
     if test "$leaveDotGit" != 1; then
         cp -r --no-preserve=all "${fetchresult}" $out
         rm -rf "$out"/.git
