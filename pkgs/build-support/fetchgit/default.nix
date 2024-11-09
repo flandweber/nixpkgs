@@ -145,9 +145,11 @@ runCommand name {
         -C "${fetchresult}" \
         verify-tag ${rev}
   fi
-  cp -r --no-preserve=all "${fetchresult}" $out
   if test "$leaveDotGit" != 1; then
+      cp -r --no-preserve=all "${fetchresult}" $out
       rm -rf "$out"/.git
+  else
+      ln "${fetchresult}" $out
   fi
 ''
 else
